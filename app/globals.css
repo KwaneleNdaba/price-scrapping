@@ -9,6 +9,18 @@
   scroll-behavior: smooth;
 }
 
+.font-spaceGrotesk {
+  /* Your font styles */
+  font-family: 'Space Grotesk', sans-serif;
+  /* Other styles */
+}
+
+.text-secondary {
+  color: #888; /* Example color */
+  /* Other text styles */
+}
+
+
 @layer base {
   body {
     @apply font-inter;
