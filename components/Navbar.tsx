@@ -22,7 +22,7 @@ function Navbar() {
             height={30}
             alt=" logo"
           />
-          <p className="nav-logo">
+          <p className="nav-logo ">
             Price<span className="text-primary">Tracker</span>
           </p>
         </Link>
