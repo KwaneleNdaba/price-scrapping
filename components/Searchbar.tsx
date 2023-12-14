@@ -1,4 +1,5 @@
 "use client";
+import { scrapeAndStoreProduct } from "@/lib/actions";
 import React, { FormEvent, useState } from "react";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
@@ -23,7 +24,7 @@ function Searchbar() {
     }
   };
 
-  const handleSubmit = (e: FormEvent<HTMLFormElement>) => {
+  const handleSubmit = async (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     const isValidProductLink = isValidAmazonProductUrl(searchPrompt);
 
@@ -51,6 +52,10 @@ function Searchbar() {
 
     try {
       setIsLoading(true);
+
+      const product = await scrapeAndStoreProduct(searchPrompt)
+      toast.dismiss(_id);
+
     } catch (error) {
       toast.dismiss(_id);
       console.log(error);
