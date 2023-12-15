@@ -68,3 +68,20 @@ try {
     throw new Error(`Failed to get the product: ${error.message}`)
 }
 }
+
+
+export async function getAllProducts(){
+    try {
+        connectToDB()
+    
+        const products = await Product.find();
+    
+        if(!products) return;
+    
+        return products;
+        
+    } catch (error:any) {
+        throw new Error(`Failed to get the product: ${error.message}`)
+    }
+    }
+    

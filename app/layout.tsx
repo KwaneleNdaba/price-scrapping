@@ -24,12 +24,14 @@ export default function RootLayout({
   return (
     <html lang="en">
  
-      <main className="max-w-10xl mx-auto">
+
       <body className={inter.className}>
+      <main className="max-w-10xl mx-auto">
       <Navbar/>
         {children}
+        </main>
         </body>
-      </main>
+      
     </html>
   )
 }
