@@ -23,7 +23,7 @@ export async function scrapeAmazonProduct(url: string) {
     }
 
     try {
-        const images: any = [];
+        const images: string[] = [];
         const response = await axios.get(url, options);//I am getting the page using the url and bright data configurations
 
         const $ = cheerio.load(response.data);
@@ -31,7 +31,7 @@ export async function scrapeAmazonProduct(url: string) {
         const title = $(".vtex-store-components-3-x-productBrand").text().trim();
         const price = extractPrice($(".vtex-product-price-1-x-sellingPrice"))
         $(".vtex-store-components-3-x-productImageTag").each(function () {
-            const imageSrc = $(this).attr("src");
+            const imageSrc = $(this).attr("src")!;
             images.push(imageSrc);
         });
 
