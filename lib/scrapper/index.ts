@@ -56,7 +56,14 @@ export async function scrapeAmazonProduct(url: string) {
 
 
         console.log({ title, currentPrice, images, currency,paymentBreakDownSection,svgIcon,svgFill,svgHeight,svgWidth,svgViewBox,deliveryText,colorTitle,color,colorImg,sizeTitle})
-        
+        const data = {
+            url,
+            title,
+            price : currentPrice,
+            currency,
+            images,
+            
+        }
 
         return true;
 
