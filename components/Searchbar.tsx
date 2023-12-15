@@ -11,11 +11,11 @@ function Searchbar() {
     try {
       const parseUrl = new URL(url); //taking an argument making it a URL
       const hostname = parseUrl.hostname; //checking where is the product url hosted
-
+      console.log("Hostname", hostname);
       if (
-        hostname.includes("amazon.com") ||
-        hostname.includes("amazon") ||
-        hostname.endsWith("amazon")
+        hostname.includes("bash.com") ||
+        hostname.includes("bash") ||
+        hostname.endsWith("bash")
       ) {
         return true;
       }
@@ -40,7 +40,7 @@ function Searchbar() {
     });
     if (!isValidProductLink) {
       toast.update(_id, {
-        render: "Please enter a valid Amazon Product link",
+        render: "Please enter a valid Sportscene product link",
         type: "error",
         isLoading: false,
       });
@@ -54,10 +54,22 @@ function Searchbar() {
       setIsLoading(true);
 
       const product = await scrapeAndStoreProduct(searchPrompt)
-      toast.dismiss(_id);
-
+      if(product){
+        toast.dismiss(_id);
+        setIsLoading(false);
+      }
+    
+    
     } catch (error) {
-      toast.dismiss(_id);
+      toast.update(_id, {
+        render: "Error: Please try again later",
+        type: "error",
+        isLoading: false,
+      });
+    
+      setTimeout(()=> {
+        toast.dismiss(_id);
+      },2000)
       console.log(error);
     }
   };
