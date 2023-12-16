@@ -10,7 +10,7 @@ import { User } from "@/types";
 import { generateEmailBody, sendEmail } from "../nodeMailer";
 
 export async function scrapeAndStoreProduct(productUrl: string) {
-    if (!productUrl) return;
+    if (!productUrl) return false;
 
     try {
 
@@ -20,7 +20,7 @@ export async function scrapeAndStoreProduct(productUrl: string) {
 
         const scrapedProduct = await scrapeAmazonProduct(productUrl);
         if (!scrapedProduct) {
-            return;
+            return false;
         }
 
         let product = scrapedProduct;
@@ -47,10 +47,12 @@ export async function scrapeAndStoreProduct(productUrl: string) {
             { upsert: true, new: true })//if none exists then create one 
 
         revalidatePath(`/products/${newProduct._id}`)
-       return newProduct;
+        if (newProduct) {
+            return newProduct ;
+        }
     } catch (error: any) {
         throw new Error(`Failed to create or update product: ${error.message}`)
-        
+        return false
     }
 }
 

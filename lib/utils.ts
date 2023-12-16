@@ -64,24 +64,24 @@ export function getAveragePrice(priceList: PriceHistoryItem[]) {
   return averagePrice;
 }
 
-// export const getEmailNotifType = (
-//   scrapedProduct: Product,
-//   currentProduct: Product
-// ) => {
-//   const lowestPrice = getLowestPrice(currentProduct.priceHistory);
+export const getEmailNotifType = (
+  scrapedProduct: Product,
+  currentProduct: Product
+) => {
+  const lowestPrice = getLowestPrice(currentProduct.priceHistory);
 
-//   if (scrapedProduct.currentPrice < lowestPrice) {
-//     return Notification.LOWEST_PRICE as keyof typeof Notification;
-//   }
-//   if (!scrapedProduct.isOutOfStock && currentProduct.isOutOfStock) {
-//     return Notification.CHANGE_OF_STOCK as keyof typeof Notification;
-//   }
-//   if (scrapedProduct.discountRate >= THRESHOLD_PERCENTAGE) {
-//     return Notification.THRESHOLD_MET as keyof typeof Notification;
-//   }
+  if (scrapedProduct.currentPrice < lowestPrice) {
+    return Notification.LOWEST_PRICE as keyof typeof Notification;
+  }
+  if (!scrapedProduct.isOutOfStock && currentProduct.isOutOfStock) {
+    return Notification.CHANGE_OF_STOCK as keyof typeof Notification;
+  }
+  if (scrapedProduct.discountRate >= THRESHOLD_PERCENTAGE) {
+    return Notification.THRESHOLD_MET as keyof typeof Notification;
+  }
 
-//   return null;
-// };
+  return null;
+};
 
 export const formatNumber = (num: number = 0) => {
   return num.toLocaleString(undefined, {
@@ -89,23 +89,22 @@ export const formatNumber = (num: number = 0) => {
     maximumFractionDigits: 0,
   });
 };
-
 export function extractPrice(...elements: any) {
-    for (const element of elements) {
-        const priceText = element.text().trim();
+  for (const element of elements) {
+      const priceText = element.text().trim();
 
-        if (priceText) {
-            // Replace comma with dot for decimal values and remove non-numeric characters except dot
-            const cleanedPrice = Number(priceText.replace(/[^\d,.]/g, '').replace(',', '.'));
-            
-            if (!isNaN(cleanedPrice)) {
-                return cleanedPrice;
-            } else {
-                console.log("Invalid price format:", priceText);
-            }
-        }
-    }
-    return null; // Return null if no valid price is found
+      if (priceText) {
+          // Replace comma with dot for decimal values and remove non-numeric characters except dot
+          const cleanedPrice = Number(priceText.replace(/[^\d,.]/g, '').replace(',', '.'));
+          
+          if (!Number.isNaN(cleanedPrice)) {
+              return cleanedPrice;
+          } else {
+              console.log("Invalid price format:", priceText);
+          }
+      }
+  }
+  return null; // Return null if no valid price is found
 }
 
 

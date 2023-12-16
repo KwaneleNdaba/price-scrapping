@@ -33,10 +33,11 @@ const HeroCarousel: React.FC<HeroCarouselProps> = ({ images = heroImages }) => {
         showArrows={false}
         showStatus={false}
       >
-        {images.map((image: any) => (
+        {images.map((image: any,index:number) => (
           <Image
             className="object-contains"
             src={image}
+            key ={index}
             alt="image"
             width={484}
             height={484}

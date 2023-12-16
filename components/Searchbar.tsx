@@ -52,24 +52,27 @@ function Searchbar() {
 
     try {
       setIsLoading(true);
-
+      debugger;
       const product = await scrapeAndStoreProduct(searchPrompt)
-      if(product){
+      debugger;
+      if(product !== null){
         toast.dismiss(_id);
         setIsLoading(false);
       }
     
-    
+      return;
     } catch (error) {
-      toast.update(_id, {
-        render: "Error: Please try again later",
-        type: "error",
-        isLoading: false,
-      });
+
+      // toast.update(_id, {
+      //   render: "Error: Please try again later",
+      //   type: "error",
+      //   isLoading: false,
+      // });
     
       setTimeout(()=> {
         toast.dismiss(_id);
       },2000)
+      debugger;
       console.log(error);
     }
   };

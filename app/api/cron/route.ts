@@ -1,7 +1,7 @@
 import { scrapeAndStoreProduct } from "@/lib/actions";
 import Product from "@/lib/models/product.model";
 import { connectToDB } from "@/lib/mongoose";
-import { getAveragePrice, getHighestPrice, getLowestPrice } from "@/lib/utils";
+import { getAveragePrice, getEmailNotifType, getHighestPrice, getLowestPrice } from "@/lib/utils";
 
 export async function GET (){
     try {
@@ -38,7 +38,7 @@ export async function GET (){
 
              //check the product status 
 
-            //  const emailNotifyType = getEmailNotifType(scrapedProduct, currentProduct)//we need to compare so we can know what has changed 
+             const emailNotifyType = getEmailNotifType(scrapedProduct, currentProduct)//we need to compare so we can know what has changed 
              
 
 

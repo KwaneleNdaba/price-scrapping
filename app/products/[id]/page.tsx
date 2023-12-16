@@ -76,7 +76,7 @@ async function Productdetails({ params: { id } }: Props) {
                 {product.currency} {product.originalPrice.toFixed(2)}
                 <p className="text-l text-red-500">
                   <span className="text-primary-red font-semibold">
-                    -{product.discountRate}
+                    -{product.discountRate}%
                   </span>
                 </p>
               </p>
