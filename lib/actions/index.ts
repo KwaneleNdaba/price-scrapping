@@ -10,51 +10,46 @@ import { User } from "@/types";
 import { generateEmailBody, sendEmail } from "../nodeMailer";
 
 export async function scrapeAndStoreProduct(productUrl: string) {
-    if (!productUrl) return false;
-
+    if(!productUrl) return;
+  
     try {
-
-        connectToDB();
-
-
-
-        const scrapedProduct = await scrapeAmazonProduct(productUrl);
-        if (!scrapedProduct) {
-            return false;
+      connectToDB();
+  
+      const scrapedProduct = await scrapeAmazonProduct(productUrl);
+  
+      if(!scrapedProduct) return;
+  
+      let product = scrapedProduct;
+  
+      const existingProduct = await Product.findOne({ url: scrapedProduct.url });
+  
+      if(existingProduct) {
+        const updatedPriceHistory: any = [
+          ...existingProduct.priceHistory,
+          { price: scrapedProduct.currentPrice }
+        ]
+  
+        product = {
+          ...scrapedProduct,
+          priceHistory: updatedPriceHistory,
+          lowestPrice: getLowestPrice(updatedPriceHistory),
+          highestPrice: getHighestPrice(updatedPriceHistory),
+          averagePrice: getAveragePrice(updatedPriceHistory),
         }
-
-        let product = scrapedProduct;
-
-        const existingProduct = await Product.findOne({ url: scrapedProduct.url });
-        if (existingProduct) {
-            const updatedPriceHistoy = [
-                ...existingProduct.priceHistory,
-                { price: scrapedProduct.currentPrice }
-            ]
-
-            product = {
-                ...scrapedProduct,
-                priceHistory: updatedPriceHistoy,
-                lowestPrice: getLowestPrice(updatedPriceHistoy),
-                highestPrice: getHighestPrice(updatedPriceHistoy),
-                averagePrice: getAveragePrice(updatedPriceHistoy)
-
-            }
-        }
-
-        const newProduct = await Product.findOneAndUpdate({ url: scrapedProduct.url },
-            product,
-            { upsert: true, new: true })//if none exists then create one 
-
-        revalidatePath(`/products/${newProduct._id}`)
-        if (newProduct) {
-            return newProduct ;
-        }
+      }
+  
+      const newProduct = await Product.findOneAndUpdate(
+        { url: scrapedProduct.url },
+        product,
+        { upsert: true, new: true }
+      );
+  
+      revalidatePath(`/products/${newProduct._id}`);
     } catch (error: any) {
-        throw new Error(`Failed to create or update product: ${error.message}`)
-        return false
+      throw new Error(`Failed to create/update product: ${error.message}`)
     }
-}
+  }
+  
 
 export async function getProductById(productId: string) {
     try {
@@ -107,15 +102,15 @@ export async function getSimilarProducts(productId: string) {
     }
 }
 
-export async function addUserEmailToProduct(productId: string, userEmail:string){
+export async function addUserEmailToProduct(productId: string, userEmail: string) {
     try {
         const product = await Product.findById(productId);
-        if(!product) return;
+        if (!product) return;
 
-        const userExists = product.users.some((user:User) => user.email === userEmail);
+        const userExists = product.users.some((user: User) => user.email === userEmail);
 
-        if(!userExists){
-            product.users.push({email:userEmail});
+        if (!userExists) {
+            product.users.push({ email: userEmail });
 
             await product.save();
 
@@ -123,7 +118,7 @@ export async function addUserEmailToProduct(productId: string, userEmail:string)
 
             await sendEmail(emailContent, [userEmail])
         }
-    } catch (error:any) {
-        throw new Error( `Faile to  add user email to product: ${error.message}`)
+    } catch (error: any) {
+        throw new Error(`Faile to  add user email to product: ${error.message}`)
     }
 }

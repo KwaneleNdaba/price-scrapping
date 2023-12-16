@@ -74,9 +74,13 @@ export async function scrapeAmazonProduct(url: string) {
 
     } catch (error: any) {
         throw new Error(`Failed to scrape product: ${error.message}`);
-        return false;
+      
     }
-    // try {
+   
+    
+}
+
+ // try {
     //     const images: string[] = [];
     //     const response = await axios.get(url, options);//I am getting the page using the url and bright data configurations
 
@@ -149,6 +153,3 @@ export async function scrapeAmazonProduct(url: string) {
     //     throw new Error(`Failed to scrape product: ${error.message}`)
     //     return false
     // }
-
-}
-

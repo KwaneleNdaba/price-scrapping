@@ -1,5 +1,6 @@
 "use client";
 import { scrapeAndStoreProduct } from "@/lib/actions";
+import { Product } from "@/types";
 import React, { FormEvent, useState } from "react";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
@@ -52,27 +53,23 @@ function Searchbar() {
 
     try {
       setIsLoading(true);
-      debugger;
-      const product = await scrapeAndStoreProduct(searchPrompt)
-      debugger;
-      if(product !== null){
-        toast.dismiss(_id);
+      const product = await scrapeAndStoreProduct(searchPrompt) ;
+    
+          toast.dismiss(_id);
+    
         setIsLoading(false);
-      }
-    
-      return;
+      
     } catch (error) {
+      toast.update(_id, {
+        render: "Error: Please try again later",
+        type: "error",
+        isLoading: false,
+      });
 
-      // toast.update(_id, {
-      //   render: "Error: Please try again later",
-      //   type: "error",
-      //   isLoading: false,
-      // });
-    
-      setTimeout(()=> {
+      setTimeout(() => {
         toast.dismiss(_id);
-      },2000)
-      debugger;
+      }, 2000);
+
       console.log(error);
     }
   };
@@ -96,7 +93,7 @@ function Searchbar() {
           type="submit"
           className="searchbar-btn"
         >
-        {isLoading ? "Searching.." : "  Search"}
+          {isLoading ? "Searching.." : "  Search"}
         </button>
       </form>
     </>
