@@ -12,7 +12,7 @@ function ProductCard({product}:{product:Product}) {
             alt={product.title}
             width={200}
             height={200}
-            className='product-card_img'
+            className='product-card_img product-card_img '
             />
         </div>
         <div className="flex flex-col gap-3">
