@@ -54,21 +54,38 @@ export async function scrapeAmazonProduct(url: string) {
         const indexOfSize = sizeTextParentElement.indexOf('Size');
         const sizeTitle = indexOfColour !== -1 ? sizeTextParentElement.slice(indexOfSize, indexOfSize + 4) : '';
         const description = $("div.thefoschini-vtex-tfg-custom-components-1-x-accordionWrapper > p").text().trim();
+        const originalPrice = $(".vtex-product-price-1-x-currencyInteger--tfg-pdp-discount-savings-previousPriceValue") // Selects the span containing 'R'
+        .text() // Retrieves the text content
+        .trim(); // Removes extra spaces
+
+        const discountRate = $(".vtex-product-price-1-x-savingsPercentage") // Selects the span containing 'R'
+        .text() // Retrieves the text content
+        .trim(); // Removes extra spaces
+
+
+        const content1 = $(".thefoschini-vtex-tfg-custom-components-1-x-attributeLabel thefoschini-vtex-tfg-custom-components-1-x-attributeLabel--pdp-product-info-accordion").text().trim();
+        
+        const content2 = $(".thefoschini-vtex-tfg-custom-components-1-x-attributeLabel--pdp-product-info-accordion").text().trim();
+    
+        const content3 = $(".thefoschini-vtex-tfg-custom-components-1-x-attributeLabel.thefoschini-vtex-tfg-custom-components-1-x-attributeLabel--pdp-product-info-accordion").text().trim();
+       
+       
+        console.log({content1,content2,content3});
 
         const data = {
              url,
             currency: currency,
             image: images,
             title: title,
-            currentPrice: price,
-            originalPrice: (Number(price)*0.20)+Number(price),
-            priceHistory:  [],
-            highestPrice:(Number(price)*0.20)+Number(price),
-            lowestPrice: Number(price),
-            averagePrice: 100,
-            discountRate:20,
+            currentPrice: Number(price) || Number(originalPrice),
+            originalPrice:  Number(originalPrice) || Number(price) ,
+            priceHistory: [ {price:Number(originalPrice)},{price:Number(price)}],
+            highestPrice: Number(originalPrice) || Number(price) ,
+            lowestPrice:Number(price) || Number(originalPrice),
+            averagePrice:  Number(price) || Number(originalPrice),
+            discountRate:discountRate,
             description: description,
-            category: "category",
+            category: content1,
             reviewsCount:100,
             stars: 4,
             isOutOfStock:false

@@ -12,8 +12,8 @@ async function Home() {
   console.log("All Products", allProducts)
 
   return (
-    <>
-      <section className="px-6 md:px-20 py-24  ">
+    <div className="mb-10">
+      <section className="px-6 md:px-20 py-24 ">
         <div className="flex max-xl:flex-col gap-16">
           <div className="flex flex-col justify-center">
             <p className="small-text">
@@ -46,7 +46,7 @@ async function Home() {
           ))}
         </div>
       </section>
-    </>
+    </div>
   );
 }
 

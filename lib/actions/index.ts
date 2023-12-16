@@ -84,4 +84,23 @@ export async function getAllProducts(){
         throw new Error(`Failed to get the product: ${error.message}`)
     }
     }
-    
+
+    export async function getSimilarProducts(productId :string){
+        try {
+            connectToDB();
+
+            const currentProduct = await Product.findById({_id: productId});
+
+            if(!currentProduct) return null;
+
+            const similarProducts = await Product.find({
+                _id:{$ne:productId},//not equaly to productId
+
+            }).limit(3)
+
+            return similarProducts
+
+        } catch (error) {
+            
+        }
+    }

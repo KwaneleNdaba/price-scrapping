@@ -1,5 +1,5 @@
 export type PriceHistoryItem = {
-    price: number;
+    price: any;
   };
   
   export type User = {
@@ -18,7 +18,7 @@ export type PriceHistoryItem = {
     highestPrice: number;
     lowestPrice: number;
     averagePrice: number;
-    discountRate: number;
+    discountRate: string;
     description: string;
     category: string;
     reviewsCount: number;
