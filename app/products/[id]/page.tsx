@@ -1,4 +1,5 @@
 import HeroCarousel from "@/components/HeroCarousel";
+import Modal from "@/components/Modal";
 import PriceInfoCard from "@/components/PriceInfoCard";
 import ProductCard from "@/components/ProductCard";
 import { getProductById, getSimilarProducts } from "@/lib/actions";
@@ -136,8 +137,9 @@ async function Productdetails({ params: { id } }: Props) {
               />
             </div>
           </div>
-          {/* <Modal/> */}
+          <Modal productId={id}/>
         </div>
+   
       </div>
       <div className="flex flex-col gap-16">
         <div className="flex flex-col gap-5 ">

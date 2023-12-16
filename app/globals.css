@@ -31,7 +31,7 @@
 
 @layer utilities {
   .btn {
-    @apply py-4 px-4 bg-secondary hover:bg-opacity-70 rounded-[30px] text-white text-lg font-semibold;
+    @apply py-4 px-4 bg-black hover:bg-opacity-70 rounded-[30px] text-white text-lg font-semibold;
   }
 
   .head-text {
@@ -121,7 +121,7 @@
   }
 
   .dialog-btn {
-    @apply px-5 py-3 text-white text-base font-semibold border border-secondary bg-secondary rounded-lg mt-8;
+    @apply px-5 py-3 text-white text-base font-semibold border border-black bg-black rounded-lg mt-8;
   }
 
   /* NAVBAR */
