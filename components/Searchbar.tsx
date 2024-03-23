@@ -7,6 +7,7 @@ import "react-toastify/dist/ReactToastify.css";
 function Searchbar() {
   const [searchPrompt, setSearchPrompt] = useState("");
   const [isLoading, setIsLoading] = useState(false);
+  const [seachText, setSeachText] = useState("")
 
   const isValidAmazonProductUrl = (url: string) => {
     try {
@@ -58,7 +59,7 @@ function Searchbar() {
           toast.dismiss(_id);
     
         setIsLoading(false);
-      
+      setSearchPrompt("");
     } catch (error) {
       toast.update(_id, {
         render: "Error: Please try again later",
@@ -76,12 +77,14 @@ function Searchbar() {
 
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setSearchPrompt(e.target.value);
+   
   };
   return (
     <>
       <ToastContainer />
       <form onSubmit={handleSubmit} className="flex flex-wrap gap-4 mt-12">
         <input
+        value = {searchPrompt}
           onChange={handleInputChange}
           type="text"
           placeholder="Enter product link"

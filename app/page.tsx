@@ -31,7 +31,7 @@ async function Home() {
             </h1>
             <p className="mt-6">
               Powerful, self-serve product and growth analytics to help you
-              convert, engage, and retain more.
+              convert, engage, and retain more. <a style={{color : "blue"}} href="https://bash.com/jewellery/metal-stones/gold-jewellery"> Get Product URL here.</a>
             </p>
             <Searchbar />
           </div>
